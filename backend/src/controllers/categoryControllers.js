@@ -1,7 +1,7 @@
 const models = require("../models");
 
 const browse = (req, res) => {
-  models.item
+  models.category_detail
     .findAll()
     .then(([rows]) => {
       res.send(rows);
@@ -13,7 +13,7 @@ const browse = (req, res) => {
 };
 
 const read = (req, res) => {
-  models.item
+  models.category_detail
     .find(req.params.id)
     .then(([rows]) => {
       if (rows[0] == null) {
@@ -29,19 +29,19 @@ const read = (req, res) => {
 };
 
 const edit = (req, res) => {
-  const item = req.body;
+  const category = req.body;
 
   // TODO validations (length, format...)
 
-  item.id = parseInt(req.params.id, 10);
+  category.id = parseInt(req.params.id, 10);
 
-  models.item
-    .update(item)
+  models.category_detail
+    .update(category)
     .then(([result]) => {
       if (result.affectedRows === 0) {
         res.sendStatus(404);
       } else {
-        res.sendStatus(204);
+        res.status(201).send("Category updated");
       }
     })
     .catch((err) => {
@@ -51,14 +51,17 @@ const edit = (req, res) => {
 };
 
 const add = (req, res) => {
-  const item = req.body;
+  const category = req.body;
 
   // TODO validations (length, format...)
 
-  models.item
-    .insert(item)
+  models.category_detail
+    .insert(category)
     .then(([result]) => {
-      res.location(`/items/${result.insertId}`).sendStatus(201);
+      res
+        .location(`/api/categories/${result.insertId}`)
+        .status(201)
+        .send("Category created");
     })
     .catch((err) => {
       console.error(err);
@@ -67,13 +70,13 @@ const add = (req, res) => {
 };
 
 const destroy = (req, res) => {
-  models.item
+  models.category_detail
     .delete(req.params.id)
     .then(([result]) => {
       if (result.affectedRows === 0) {
         res.sendStatus(404);
       } else {
-        res.sendStatus(204);
+        res.status(201).send("Category deleted");
       }
     })
     .catch((err) => {
