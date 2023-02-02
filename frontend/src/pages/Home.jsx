@@ -27,7 +27,7 @@ function Home() {
                 </div>
                 <Link to="/login">
                   <div className="my-8 flex justify-center sm:justify-start">
-                    <div className="block w-3/6 rounded-md border border-transparent px-5 py-3 bg-rose-500 text-base font-medium text-white shadow hover:bg-rose-600 sm:px-10 text-center">
+                    <div className="block w-3/6 rounded-md border border-transparent px-5 py-3 bg-indigo-500 text-base font-medium text-white shadow hover:bg-indigo-600 sm:px-10 text-center">
                       Se connecter
                     </div>
                   </div>

@@ -2,7 +2,7 @@ const models = require("../models");
 
 const browse = (req, res) => {
   models.transaction
-    .findAll()
+    .findAll(req.params.id)
     .then(([rows]) => {
       res.send(rows);
     })

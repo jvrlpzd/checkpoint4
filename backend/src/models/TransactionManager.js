@@ -5,6 +5,13 @@ class TransactionManager extends AbstractManager {
     super({ table: "transaction" });
   }
 
+  findAll(id) {
+    return this.connection.query(
+      `select * from  ${this.table} where user_id = ? order by date DESC`,
+      [id]
+    );
+  }
+
   insert(transaction) {
     return this.connection.query(
       `insert into ${this.table} (amount, date, comment, user_id, category_id) values (?, ?, ?, ?, ?)`,

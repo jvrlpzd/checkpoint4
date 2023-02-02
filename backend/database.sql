@@ -32,7 +32,6 @@ CREATE TABLE IF NOT EXISTS `expense_tracker`.`group_detail` (
   `image` VARCHAR(300) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -53,7 +52,6 @@ CREATE TABLE IF NOT EXISTS `expense_tracker`.`category_detail` (
     FOREIGN KEY (`group_id`)
     REFERENCES `expense_tracker`.`group_detail` (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 24
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -73,7 +71,6 @@ CREATE TABLE IF NOT EXISTS `expense_tracker`.`user_detail` (
   UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -100,7 +97,6 @@ CREATE TABLE IF NOT EXISTS `expense_tracker`.`transaction` (
     FOREIGN KEY (`user_id`)
     REFERENCES `expense_tracker`.`user_detail` (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 33
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -119,7 +115,7 @@ INSERT INTO category_detail (category_name, group_id) values
 ('Cinéma', 5), ('Concerts', 5), ('Autre', 6);
 
 INSERT INTO user_detail (username, email, hashedPassword) values
- ('Javier', 'javier@wild.fr', 'wildcodeschool');
+ ('Admin', 'admin@wild.fr', '$argon2id$v=19$m=65536,t=5,p=1$IQXXOerzW64QYULeWzCsaA$QioiFzKhiicNn3htwaI1QoIIySCoaI5WbzWtKXYUICw'), ('FullStackdu69', 'fullstack@wild.fr', '$argon2id$v=19$m=65536,t=5,p=1$IQXXOerzW64QYULeWzCsaA$QioiFzKhiicNn3htwaI1QoIIySCoaI5WbzWtKXYUICw');
 
 INSERT INTO transaction (amount, date, comment, user_id, category_id) values 
 (1000, '2023-01-03 14:56:48', 'Allocation Pole Emploi', 1, 1),

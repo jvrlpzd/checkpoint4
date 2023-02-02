@@ -22,7 +22,7 @@ router.post(
   verifyPassword
 );
 
-router.get("/api/transactions", transactionControllers.browse);
+router.get("/api/transactions/user/:id", transactionControllers.browse);
 router.get("/api/transactions/:id", transactionControllers.read);
 router.put("/api/transactions/:id", transactionControllers.edit);
 router.post("/api/transactions", transactionControllers.add);
