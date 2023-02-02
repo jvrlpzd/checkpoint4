@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTokenContext } from "../contexts/TokenContext";
+import logo from "../assets/logo.png";
 
 function SignUp() {
   const [username, setUsername] = useState("");
@@ -35,7 +36,7 @@ function SignUp() {
         .then((response) => {
           if (response.status === 201) {
             console.warn("trololo", response);
-            setRegisterOk("Votre compte a bien été créé");
+            setRegisterOk("Compte créé");
             navigate("/login");
           }
           response.json();
@@ -53,11 +54,7 @@ function SignUp() {
     <div>
       <div className="min-h-full flex flex-col justify-center py-32 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          {/* <img
-            className="mx-auto h-12 w-auto"
-            src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-            alt="Workflow"
-          /> */}
+          <img className="mx-auto h-20 w-auto" src={logo} alt="Piggy" />
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Créez votre compte
           </h2>

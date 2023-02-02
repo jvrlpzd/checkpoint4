@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import logo from "../assets/logo.png";
 import { useTokenContext } from "../contexts/TokenContext";
 
 const backEnd = import.meta.env.VITE_BACKEND_URL;
@@ -57,11 +58,7 @@ function Connexion() {
     <div>
       <div className="min-h-full flex flex-col justify-center py-32 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          {/* <img
-            className="mx-auto h-12 w-auto"
-            src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-            alt="Workflow"
-          /> */}
+          <img className="mx-auto h-20 w-auto" src={logo} alt="Piggy" />
           {registerOk.length > 0 && (
             <h2 className="mt-6 text-center underline text-3xl font-extrabold text-indigo-600">
               {registerOk}

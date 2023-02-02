@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import logo from "../assets/logo.png";
 
 function Home() {
   return (
@@ -9,11 +10,7 @@ function Home() {
           <div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:gap-24">
             <div>
               <div>
-                {/* <img
-                  className="h-11 w-auto"
-                  src="https://tailwindui.com/img/logos/workflow-mark.svg?color=rose&shade=500"
-                  alt="Workflow"
-                /> */}
+                <img className="mx-auto h-32 w-auto" src={logo} alt="Piggy" />
               </div>
               <div className="mt-20">
                 <div className="mt-6 sm:max-w-xl">
@@ -21,8 +18,8 @@ function Home() {
                     Une application pour mieux suivre vos dépenses
                   </h1>
                   <p className="mt-6 text-xl text-gray-500">
-                    Vous finissez le mois en rouge sans jamais compréndre quand
-                    ou comment votre argent est parti ?
+                    Vous finissez tous les mois en rouge sans jamais compréndre
+                    quand ou comment votre argent est parti ?
                   </p>
                 </div>
                 <Link to="/login">

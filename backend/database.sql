@@ -83,7 +83,7 @@ DROP TABLE IF EXISTS `expense_tracker`.`transaction` ;
 CREATE TABLE IF NOT EXISTS `expense_tracker`.`transaction` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `amount` DECIMAL(8,2) NOT NULL,
-  `date` DATETIME NULL DEFAULT NULL,
+  `date` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `comment` VARCHAR(150) NULL DEFAULT NULL,
   `user_id` INT NOT NULL,
   `category_id` INT NOT NULL,
@@ -109,7 +109,7 @@ INSERT INTO category_detail (category_name, group_id) values
 ('Revenu', 1),('Vente', 1),('Cadeaux', 1),('Loyer', 2),('Électricité', 2),
 ('Téléphone', 2),('Internet', 2),('Mutuelle', 2),
 ('Abonnements', 2),('Courses', 3),('Medical', 3),
-('Transport', 3),('Animaux', 3),('Cafe/Snacks', 4),
+('Transport', 3),('Animaux', 3),('Cafe', 4),
 ('Restaurants', 4),('Alcool', 4),('Tabac', 4),
 ('Vêtements', 4), ('Voyages', 4), ('Livres', 5), 
 ('Cinéma', 5), ('Concerts', 5), ('Autre', 6);

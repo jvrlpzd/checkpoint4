@@ -6,7 +6,7 @@ const router = express.Router();
 const {
   hashPassword,
   verifyPassword,
-  // verifyToken,
+  verifyToken,
 } = require("./services/auth");
 
 const authControllers = require("./controllers/authControllers");
@@ -23,9 +23,13 @@ router.post(
 );
 
 router.get("/api/transactions/user/:id", transactionControllers.browse);
+router.get(
+  "/api/transactions/user/:id/countall",
+  transactionControllers.countAll
+);
 router.get("/api/transactions/:id", transactionControllers.read);
 router.put("/api/transactions/:id", transactionControllers.edit);
-router.post("/api/transactions", transactionControllers.add);
+router.post("/api/transactions", verifyToken, transactionControllers.add);
 router.delete("/api/transactions/:id", transactionControllers.destroy);
 
 router.get("/api/categories", categoryControllers.browse);

@@ -12,9 +12,18 @@ class TransactionManager extends AbstractManager {
     );
   }
 
+  findAmounts(id) {
+    return this.connection.query(
+      `SELECT SUM(CASE WHEN amount < 0 THEN amount ELSE 0 END) AS negative,
+      SUM(CASE WHEN amount > 0 THEN amount ELSE 0 END) AS positive,
+      SUM(amount) AS total FROM transaction WHERE user_id = ?`,
+      [id]
+    );
+  }
+
   insert(transaction) {
     return this.connection.query(
-      `insert into ${this.table} (amount, date, comment, user_id, category_id) values (?, ?, ?, ?, ?)`,
+      `insert into ${this.table} (amount, date, comment, user_id, category_id) values (?, IFNULL(?, CURRENT_TIMESTAMP), ?, ?, ?)`,
       [
         transaction.amount,
         transaction.date,
