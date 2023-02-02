@@ -33,6 +33,7 @@ router.post("/api/transactions", verifyToken, transactionControllers.add);
 router.delete("/api/transactions/:id", transactionControllers.destroy);
 
 router.get("/api/categories", categoryControllers.browse);
+router.get("/api/categoriessum", categoryControllers.sum);
 router.get("/api/categories/:id", categoryControllers.read);
 router.put("/api/categories/:id", categoryControllers.edit);
 router.post("/api/categories", categoryControllers.add);
@@ -45,6 +46,7 @@ router.post("/api/users", userControllers.add);
 router.delete("/api/users/:id", userControllers.destroy);
 
 router.get("/api/groups", groupControllers.browse);
+router.get("/api/groupssum", groupControllers.sum);
 router.get("/api/groups/:id", groupControllers.read);
 router.put("/api/groups/:id", groupControllers.edit);
 router.post("/api/groups", groupControllers.add);

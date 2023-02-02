@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS `expense_tracker`.`category_detail` (
   `category_name` VARCHAR(45) NOT NULL,
   `group_id` INT NOT NULL DEFAULT '6',
   `image` VARCHAR(300) NULL DEFAULT NULL,
+  `user_id` INT NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   INDEX `group_id_idx` (`group_id` ASC) VISIBLE,
   CONSTRAINT `group_id`
@@ -102,7 +103,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 INSERT INTO group_detail (group_name) values 
-('Income'),('Factures'),('Besoins'),
+('Revenu'),('Factures'),('Besoins'),
 ('Loisir / Caprices'),('Culture'), ('Autre');
 
 INSERT INTO category_detail (category_name, group_id) values 
@@ -115,7 +116,7 @@ INSERT INTO category_detail (category_name, group_id) values
 ('Cinéma', 5), ('Concerts', 5), ('Autre', 6);
 
 INSERT INTO user_detail (username, email, hashedPassword) values
- ('Admin', 'admin@wild.fr', '$argon2id$v=19$m=65536,t=5,p=1$IQXXOerzW64QYULeWzCsaA$QioiFzKhiicNn3htwaI1QoIIySCoaI5WbzWtKXYUICw'), ('FullStackdu69', 'fullstack@wild.fr', '$argon2id$v=19$m=65536,t=5,p=1$IQXXOerzW64QYULeWzCsaA$QioiFzKhiicNn3htwaI1QoIIySCoaI5WbzWtKXYUICw');
+ ('Javier', 'javier@wild.fr', '$argon2id$v=19$m=65536,t=5,p=1$IQXXOerzW64QYULeWzCsaA$QioiFzKhiicNn3htwaI1QoIIySCoaI5WbzWtKXYUICw'), ('Admin', 'admin@wild.fr', '$argon2id$v=19$m=65536,t=5,p=1$IQXXOerzW64QYULeWzCsaA$QioiFzKhiicNn3htwaI1QoIIySCoaI5WbzWtKXYUICw');
 
 INSERT INTO transaction (amount, date, comment, user_id, category_id) values 
 (1000, '2023-01-03 14:56:48', 'Allocation Pole Emploi', 1, 1),

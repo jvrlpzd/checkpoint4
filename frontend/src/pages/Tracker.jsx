@@ -5,6 +5,8 @@ import plus from "../assets/plus.png";
 import eyeopen from "../assets/eyeopen.png";
 import eyeclose from "../assets/eyeclose.png";
 import { useTokenContext } from "../contexts/TokenContext";
+import Transaction from "../components/Transaction";
+import Categories from "../components/Categories";
 
 const backEnd = import.meta.env.VITE_BACKEND_URL;
 
@@ -12,6 +14,7 @@ function Tracker() {
   const { user, token, redirectIfDisconnected } = useTokenContext();
   const [transactions, setTransactions] = useState({});
   const [amounts, setAmounts] = useState({});
+  const [changeView, setChangeView] = useState(true);
   const [categoryList, setCategoryList] = useState({});
   const [viewAmount, setViewAmount] = useState(true);
 
@@ -50,7 +53,7 @@ function Tracker() {
         setAmounts(result[0]);
       })
       .catch(console.error);
-    fetch(`${backEnd}/api/categories`, {
+    fetch(`${backEnd}/api/categoriessum`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -71,16 +74,18 @@ function Tracker() {
 
   return (
     <div className="max-w-screen truncate ">
-      <Nav />
+      <Nav setChangeView={setChangeView} changeView={changeView} />
       {transactions && categoryList && (
         <div>
           <div className="flex justify-center items-center w-full">
-            <h1 className="pt-32 pb-4 text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl duration-300 my-8">
-              Welcome <span className="text-indigo-700">{user.username}</span> !
+            <h1 className="pt-32 pb-4 text-3xl drop-shadow-md font-extrabold text-gray-900 tracking-tight sm:text-4xl duration-300 my-8">
+              Bienvenu <span className="text-indigo-700">{user.username}</span>{" "}
+              !
             </h1>
           </div>
+          {/* <button type="button" onClick={()=>console.log(categoryList)}>CATEGORY</button> */}
           <div className="transaction-container flex w-full flex-col items-center">
-            <div className="bilan mb-8 mx-3 flex flex-col w-3/5   md:w-2/5 xl:w-1/3 rounded border border-gray-400 justify-center items-center">
+            <div className="bilan mb-12 mx-3 flex flex-col w-3/5  shadow-xl md:w-2/5 xl:w-1/3 rounded border border-gray-400 justify-center items-center">
               <div className=" border-b border-gray-400 h-16 w-full flex justify-between items-center">
                 <p className="text-2xl font-extrabold text-gray-900 tracking-tight sm:text-3xl duration-300 ml-2">
                   Total:{" "}
@@ -140,7 +145,15 @@ function Tracker() {
                 </div>
               </div>
             </div>
-            <div className="transaction-container mx-4 w-full md:w-3/5 xl:w-2/5">
+            {changeView ? (
+              <Transaction
+                transactions={transactions}
+                categoryList={categoryList}
+              />
+            ) : (
+              <Categories categoryList={categoryList} />
+            )}
+            {/* <div className="transaction-container mx-4 w-full md:w-3/5 xl:w-2/5">
               <ul className="flex flex-col mx-3">
                 <li>
                   <div className="w-full flex h-16 justify-center items-center rounded border border-gray-400 bg-indigo-600">
@@ -155,7 +168,7 @@ function Tracker() {
                       <Link to={`/app/${transaction.id}`}>
                         <button
                           type="button"
-                          className="w-full flex h-12 justify-between drop-shadow-sm items-center rounded-lg border-b  border-gray-400 my-2 "
+                          className="w-full flex h-12 justify-between shadow-lg items-center rounded-lg   my-2 "
                         >
                           <div className="flex ml-2 ">
                             <h4
@@ -206,7 +219,7 @@ function Tracker() {
                     </div>
                   ))}
               </ul>
-            </div>
+            </div> */}
             <div>
               <Link to="/add">
                 <img

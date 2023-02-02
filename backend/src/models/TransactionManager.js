@@ -23,7 +23,7 @@ class TransactionManager extends AbstractManager {
 
   insert(transaction) {
     return this.connection.query(
-      `insert into ${this.table} (amount, date, comment, user_id, category_id) values (?, IFNULL(?, CURRENT_TIMESTAMP), ?, ?, ?)`,
+      `insert into ${this.table} (amount, date, comment, user_id, category_id) values (?, IFNULL(?, NOW()), ?, ?, ?)`,
       [
         transaction.amount,
         transaction.date,

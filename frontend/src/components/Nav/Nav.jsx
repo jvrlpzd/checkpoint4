@@ -1,19 +1,17 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable react/prop-types */
+//
 import React, { useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import iconMenu from "../../assets/menu.png";
 import logo from "../../assets/logo.png";
 import logout from "../../assets/logout.png";
 import { useTokenContext } from "../../contexts/TokenContext";
 
-function Nav() {
-  // On récupère la valeur stockée dans le user (qui se trouve dans le userContext) puis on va dire si user.email contient qqch alors un user est login sinon il est logout. Affichage de navbar différent.
+function Nav({ setChangeView, changeView }) {
   const { setUser, setToken } = useTokenContext();
   const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
-  const location = useLocation();
 
   const logOut = () => {
     localStorage.clear();
@@ -45,37 +43,31 @@ function Nav() {
           }`}
         >
           <ul className="md:flex items-center">
-            <li className="md:ml-8 text-xl md:my-0 my-7 hidden md:block">
-              <a
-                href="/add"
-                className="text-2xl p-6 font-extrabold text-white bg-red-600 tracking-tight sm:text-3xl duration-300"
-              >
-                Ajouter
-              </a>
-            </li>
             <li className="md:ml-8 text-xl md:my-0 my-7">
-              <a
-                href="/app"
+              <button
+                type="button"
+                onClick={() => setChangeView(true)}
                 className={
-                  location.pathname === "/app"
+                  changeView
                     ? "text-2xl font-extrabold text-gray-900 tracking-tight sm:text-3xl duration-300 underline"
                     : "text-2xl font-extrabold text-gray-900 tracking-tight sm:text-3xl duration-300"
                 }
               >
                 Historique
-              </a>
+              </button>
             </li>
             <li className="md:ml-8 text-xl md:my-0 my-7">
-              <a
-                href="/categories"
+              <button
+                type="button"
+                onClick={() => setChangeView(false)}
                 className={
-                  location.pathname === "/categories"
+                  !changeView
                     ? "text-2xl font-extrabold text-gray-900 tracking-tight sm:text-3xl duration-300 underline"
                     : "text-2xl font-extrabold text-gray-900 tracking-tight sm:text-3xl duration-300"
                 }
               >
                 Catégories
-              </a>
+              </button>
             </li>
 
             <li className="md:ml-8 text-xl md:my-0 my-7">

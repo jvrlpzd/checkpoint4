@@ -12,6 +12,18 @@ const browse = (req, res) => {
     });
 };
 
+const sum = (req, res) => {
+  models.group_detail
+    .sumAll()
+    .then(([rows]) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 const read = (req, res) => {
   models.group_detail
     .find(req.params.id)
@@ -87,6 +99,7 @@ const destroy = (req, res) => {
 
 module.exports = {
   browse,
+  sum,
   read,
   edit,
   add,

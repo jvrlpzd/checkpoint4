@@ -16,6 +16,9 @@ export function TokenContextProvider({ children }) {
   const [token, setToken] = useLocalStorage("token", "");
   const [registerOk, setRegisterOk] = useState("");
   function redirectIfDisconnected() {
+    localStorage.clear();
+    setToken("");
+    setUser({});
     navigate("/");
     toast.warn("Session expirée, veuillez-vous reconnecter !", {
       position: "top-right",

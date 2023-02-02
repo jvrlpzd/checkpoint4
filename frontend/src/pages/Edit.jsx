@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import logo from "../assets/logo.png";
 import cancel from "../assets/cancel.png";
@@ -8,20 +8,33 @@ import "react-toastify/dist/ReactToastify.css";
 
 const backEnd = import.meta.env.VITE_BACKEND_URL;
 
-function Add() {
-  const [moreOrLess, setMoreOrLess] = useState(0);
+function Edit() {
   const [categoryList, setCategoryList] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
-  // const [newDate, setNewDate] = useState();
+  const [transaction, setTransaction] = useState({});
+  const { token, redirectIfDisconnected } = useTokenContext();
 
-  const { user, token, redirectIfDisconnected } = useTokenContext();
-
-  const date = new Date();
-  const currentDate = `${date.getFullYear()}-${`0${date.getMonth() + 1}`.slice(
-    -2
-  )}-${`0${date.getDate()}`.slice(-2)}`;
+  const params = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    fetch(`${backEnd}/api/transactions/${params.id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.status === 401) {
+          redirectIfDisconnected();
+          throw Error("J'AI DIS NON!");
+        } else return response.json();
+      })
+      .then((result) => {
+        setTransaction(result);
+      })
+      .catch(console.error);
     fetch(`${backEnd}/api/categories`, {
       method: "GET",
       headers: {
@@ -41,19 +54,9 @@ function Add() {
       .catch(console.error);
   }, []);
 
-  const [dataPost, setDataPost] = useState({
-    amount: "",
-    comment: "",
-    date: currentDate,
-    user_id: user.id,
-    category_id: "4",
-    // post_image: "",
-  });
-  const navigate = useNavigate();
-
   const onChange = (e) => {
-    setDataPost({
-      ...dataPost,
+    setTransaction({
+      ...transaction,
       [e.target.name]: e.target.value,
     });
   };
@@ -61,35 +64,43 @@ function Add() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
-      moreOrLess > 0 &&
-      dataPost.amount &&
-      dataPost.comment &&
-      dataPost.user_id &&
-      dataPost.category_id
+      transaction.amount &&
+      transaction.comment &&
+      transaction.user_id &&
+      transaction.category_id
     ) {
       // const myHeaders = new Headers();
       // myHeaders.append("Content-Type", "multipart/form-data");
-      if (moreOrLess === 2) {
-        dataPost.amount *= -1;
-      }
-
-      const post = JSON.stringify(dataPost);
+      //   const newDate = transaction.date.slice(0, 10);
+      //   setTransaction({
+      //     ...transaction,
+      //     date: newDate,
+      //   });
+      const body = JSON.stringify({
+        id: transaction.id,
+        amount: transaction.amount,
+        comment: transaction.comment,
+        date: transaction.date.slice(0, 10),
+        user_id: transaction.user_id,
+        category_id: parseInt(transaction.category_id, 10),
+      });
 
       // const formData = new FormData();
       // formData.append("post", post);
       // formData.append("picture", inputRef.current.files[0]);
       const requestOptions = {
-        method: "POST",
+        method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: post,
+        body,
+        redirect: "follow",
       };
 
       // On appelle le back. Si tous les middleware placé sur la route ci-dessous,
       // je pourrais être renvoyé à la route login
-      fetch(`${backEnd}/api/transactions`, requestOptions)
+      fetch(`${backEnd}/api/transactions/${params.id}`, requestOptions)
         .then((response) => {
           if (response.status === 401) {
             redirectIfDisconnected();
@@ -98,7 +109,7 @@ function Add() {
         })
         .then((result) => {
           console.warn("YESSS", result);
-          toast.success(" Publié avec succès !", {
+          toast.success(" Modifiée avec succès !", {
             position: "top-center",
             autoClose: 3000,
             hideProgressBar: false,
@@ -126,12 +137,9 @@ function Add() {
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <img className="mx-auto h-20 w-auto" src={logo} alt="Piggy" />
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Ajoutez votre transaction
+            Modifiez votre transaction
           </h2>
         </div>
-        <button type="button" onClick={() => console.warn(currentDate)}>
-          rthrstgfr
-        </button>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
@@ -141,30 +149,6 @@ function Add() {
               method="POST"
               onSubmit={handleSubmit}
             >
-              <div className="display flex">
-                {moreOrLess < 2 && (
-                  <button
-                    type="submit"
-                    onClick={() =>
-                      moreOrLess === 0 ? setMoreOrLess(1) : setMoreOrLess(0)
-                    }
-                    className="w-full drop-shadow-xl flex m-2 justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-lime-600 hover:bg-lime-800 "
-                  >
-                    Revenu
-                  </button>
-                )}
-                {moreOrLess !== 1 && (
-                  <button
-                    type="submit"
-                    onClick={() =>
-                      moreOrLess === 0 ? setMoreOrLess(2) : setMoreOrLess(0)
-                    }
-                    className="w-full drop-shadow-xl flex m-2 justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-800"
-                  >
-                    Dépense
-                  </button>
-                )}
-              </div>
               <div>
                 <label
                   htmlFor="amount"
@@ -177,7 +161,7 @@ function Add() {
                     id="amount"
                     name="amount"
                     type="amount"
-                    value={dataPost.amount}
+                    value={transaction.amount}
                     onChange={onChange}
                     required
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -198,7 +182,7 @@ function Add() {
                     name="comment"
                     type="comment"
                     autoComplete="comment"
-                    value={dataPost.comment}
+                    value={transaction.comment}
                     onChange={onChange}
                     required
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -206,25 +190,28 @@ function Add() {
                 </div>
               </div>
 
-              <div>
-                <label
-                  htmlFor="date"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Date
-                </label>
-                <div className="mt-1">
-                  <input
-                    id="date"
-                    name="date"
-                    type="date"
-                    autoComplete="date"
-                    value={dataPost.date.slice(0, 10)}
-                    onChange={onChange}
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  />
+              {transaction.date && (
+                <div>
+                  <label
+                    htmlFor="date"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Date
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      id="date"
+                      name="date"
+                      type="date"
+                      autoComplete="date"
+                      value={transaction.date.slice(0, 10)}
+                      onChange={onChange}
+                      required
+                      className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
 
               <div>
                 <label
@@ -237,7 +224,8 @@ function Add() {
                   <select
                     name="category_id"
                     id="category_id"
-                    className="w-full h-10 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400"
+                    className="w-2/3"
+                    value={transaction.category_id}
                     onChange={onChange}
                   >
                     <option value="0">Choisir...</option>
@@ -254,7 +242,7 @@ function Add() {
               <div>
                 <button
                   type="submit"
-                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="w-full flex justify-center py-2 px-4 my-4  border border-indigo-600 rounded-md shadow-md text-sm font-medium text-black hover:text-white bg-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 duration-300"
                 >
                   Ajouter
                 </button>
@@ -274,4 +262,4 @@ function Add() {
   );
 }
 
-export default Add;
+export default Edit;

@@ -98,10 +98,6 @@ function TransactionDetail() {
           <div className="min-h-full flex flex-col justify-center py-32 sm:px-6 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
               <img className="mx-auto h-20 w-auto" src={logo} alt="Piggy" />
-              <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                {transaction.date &&
-                  transaction.date.slice(0, 10).split("-").reverse().join("-")}
-              </h2>
             </div>
 
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -115,7 +111,7 @@ function TransactionDetail() {
                       Montant
                     </label>
                     <div className="mt-1">
-                      <h1 className="text-2xl font-extrabold text-gray-900 tracking-tight sm:text-3xl duration-300">
+                      <h1 className="text-xl font-extrabold text-gray-900 tracking-tight sm:text-2xl duration-300">
                         {transaction.amount}
                       </h1>
                     </div>
@@ -129,7 +125,7 @@ function TransactionDetail() {
                       Description
                     </label>
                     <div className="mt-1">
-                      <h1 className="text-2xl font-extrabold text-gray-900 tracking-tight sm:text-3xl duration-300">
+                      <h1 className="text-xl font-extrabold text-gray-900 tracking-tight sm:text-2xl duration-300">
                         {transaction.comment}
                       </h1>
                     </div>
@@ -150,7 +146,7 @@ function TransactionDetail() {
                         .map((category) => (
                           <h1
                             key={category.id}
-                            className="text-2xl font-extrabold text-gray-900 tracking-tight sm:text-3xl duration-300"
+                            className="text-xl font-extrabold text-gray-900 tracking-tight sm:text-2xl duration-300"
                           >
                             {category.category_name}
                           </h1>
@@ -159,22 +155,43 @@ function TransactionDetail() {
                   </div>
 
                   <div>
-                    <button
-                      type="submit"
-                      className="w-full flex justify-center py-2 px-4 my-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    <label
+                      htmlFor="date"
+                      className="block underline text-sm font-medium text-gray-700"
                     >
-                      Modifier
-                    </button>
+                      Date
+                    </label>
+                    <div className="mt-1">
+                      <h1 className="text-xl font-extrabold text-gray-900 tracking-tight sm:text-2xl duration-300">
+                        {transaction.date &&
+                          transaction.date
+                            .slice(0, 10)
+                            .split("-")
+                            .reverse()
+                            .join("-")}
+                      </h1>
+                    </div>
+                  </div>
+
+                  <div>
+                    <Link to={`/app/${transaction.id}/edit`}>
+                      <button
+                        type="submit"
+                        className="w-full flex justify-center py-2 px-4 my-4  border border-indigo-600 rounded-md shadow-md text-sm font-medium text-black hover:text-white bg-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 duration-300"
+                      >
+                        Modifier
+                      </button>
+                    </Link>
                     {!confirm ? (
                       <button
                         type="submit"
                         onClick={() => setConfirm(true)}
-                        className="w-full flex justify-center py-2 px-4 my-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                        className="w-full flex justify-center py-2 px-4 my-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 duration-300"
                       >
                         Supprimer
                       </button>
                     ) : (
-                      <form>
+                      <div>
                         <h2 className="block underline text-xl w-full text-center font-medium text-gray-700">
                           Vous êtes sûr ?
                         </h2>
@@ -187,7 +204,7 @@ function TransactionDetail() {
                         >
                           YES
                         </button>
-                      </form>
+                      </div>
                     )}
                   </div>
                 </form>
