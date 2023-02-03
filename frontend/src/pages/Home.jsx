@@ -16,7 +16,7 @@ function Home() {
               <div className="mt-20">
                 <div className="mt-6 sm:max-w-xl mx-2">
                   <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl">
-                    Une application pour mieux suivre vos dépenses
+                    Piggy Bank
                   </h1>
                   <p className="mt-6 text-xl text-gray-500">
                     Vous finissez tous les mois en rouge sans jamais compréndre
