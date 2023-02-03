@@ -70,7 +70,7 @@ function Tracker() {
         setCategoryList(result);
       })
       .catch(console.error);
-  }, []);
+  }, [changeView]);
 
   return (
     <div className="max-w-screen truncate ">

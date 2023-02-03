@@ -93,7 +93,8 @@ CREATE TABLE IF NOT EXISTS `expense_tracker`.`transaction` (
   INDEX `id_idx1` (`category_id` ASC) VISIBLE,
   CONSTRAINT `category_id`
     FOREIGN KEY (`category_id`)
-    REFERENCES `expense_tracker`.`category_detail` (`id`),
+    REFERENCES `expense_tracker`.`category_detail` (`id`)
+    ON DELETE CASCADE,
   CONSTRAINT `user_id`
     FOREIGN KEY (`user_id`)
     REFERENCES `expense_tracker`.`user_detail` (`id`))

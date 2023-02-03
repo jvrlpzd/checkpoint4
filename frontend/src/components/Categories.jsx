@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useTokenContext } from "../contexts/TokenContext";
+import bin from "../assets/deleteBtn.png";
 
 const backEnd = import.meta.env.VITE_BACKEND_URL;
 
@@ -9,6 +12,7 @@ function Categories() {
 
   const [groupList, setGroupList] = useState({});
   const [categoryList, setCategoryList] = useState({});
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     fetch(`${backEnd}/api/categoriessum`, {
@@ -46,7 +50,36 @@ function Categories() {
         setGroupList(result);
       })
       .catch(console.error);
-  }, []);
+  }, [refresh]);
+
+  const handleDeleteCategory = (categoryId) => {
+    fetch(`${backEnd}/api/categories/${categoryId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.status === 401) {
+          redirectIfDisconnected();
+          throw Error("J'AI DIS NON!");
+        } else {
+          toast.success("Catégorie Supprimée !", {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            theme: "light",
+          });
+          setRefresh(!refresh);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
   return (
     <div className="w-full">
@@ -87,15 +120,27 @@ function Categories() {
                               key={category.id}
                               className="w-full flex h-12 justify-between shadow-lg items-center rounded-lg   my-2 "
                             >
-                              <div className="flex w-full justify-between mx-8">
+                              <div className="flex w-full justify-between mx-4">
                                 <div className="flex ml-2 ">
                                   <h1>{category.category_name}</h1>
                                 </div>
 
-                                <div className="">
+                                <div className="flex">
                                   <h4 className="font-extrabold text-gray-900 tracking-tight">
                                     {category.total_amount}
                                   </h4>
+                                  <button
+                                    type="button"
+                                    onClick={() =>
+                                      handleDeleteCategory(category.id)
+                                    }
+                                  >
+                                    <img
+                                      src={bin}
+                                      alt="delete"
+                                      className="ml-2"
+                                    />
+                                  </button>
                                 </div>
                               </div>
                             </div>
