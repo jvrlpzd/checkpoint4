@@ -4,11 +4,11 @@ import tracker from "../assets/tracker.png";
 
 function Home() {
   return (
-    <div className="bg-white">
+    <div className="bg-white max-h-screen max-w-screen">
       <main>
         {/* Hero section */}
-        <div className="pt-8 overflow-hidden sm:pt-12 lg:relative lg:py-60">
-          <div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:gap-24">
+        <div className="overflow-hidden sm:pt-12 lg:relative lg:py-24">
+          <div className="mx-auto max-w-md sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:gap-24">
             <div>
               <div>
                 <img className="mx-auto h-32 w-auto" src={logo} alt="Piggy" />
