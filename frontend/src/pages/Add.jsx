@@ -114,7 +114,7 @@ function Add() {
   };
 
   return (
-    <div>
+    <div className="max-h-screen">
       <Link to="/app">
         <img
           src={cancel}
@@ -122,16 +122,13 @@ function Add() {
           className="h-14 w-14 fixed top-7 right-7"
         />
       </Link>
-      <div className="min-h-full flex flex-col justify-center py-32 sm:px-6 lg:px-8">
+      <div className="min-h-full flex flex-col justify-center py-6 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <img className="mx-auto h-20 w-auto" src={logo} alt="Piggy" />
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Ajoutez votre transaction
           </h2>
         </div>
-        <button type="button" onClick={() => console.warn(currentDate)}>
-          rthrstgfr
-        </button>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">

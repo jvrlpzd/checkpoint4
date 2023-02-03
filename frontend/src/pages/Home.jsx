@@ -4,19 +4,19 @@ import tracker from "../assets/tracker.png";
 
 function Home() {
   return (
-    <div className="bg-white">
+    <div className="bg-white max-h-screen max-w-screen">
       <main>
         {/* Hero section */}
-        <div className="pt-8 overflow-hidden sm:pt-12 lg:relative lg:py-60">
-          <div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:gap-24">
+        <div className="overflow-hidden sm:pt-12 lg:relative lg:py-24">
+          <div className="mx-auto max-w-md sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:gap-24">
             <div>
               <div>
                 <img className="mx-auto h-32 w-auto" src={logo} alt="Piggy" />
               </div>
               <div className="mt-20">
-                <div className="mt-6 sm:max-w-xl">
+                <div className="mt-6 sm:max-w-xl mx-2">
                   <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl">
-                    Une application pour mieux suivre vos dépenses
+                    Piggy Bank
                   </h1>
                   <p className="mt-6 text-xl text-gray-500">
                     Vous finissez tous les mois en rouge sans jamais compréndre
