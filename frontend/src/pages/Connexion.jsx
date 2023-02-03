@@ -58,7 +58,9 @@ function Connexion() {
     <div>
       <div className="min-h-full flex flex-col justify-center py-32 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <img className="mx-auto h-20 w-auto" src={logo} alt="Piggy" />
+          <a href="/">
+            <img className="mx-auto h-20 w-auto" src={logo} alt="Piggy" />
+          </a>
           {registerOk.length > 0 && (
             <h2 className="mt-6 text-center underline text-3xl font-extrabold text-indigo-600">
               {registerOk}

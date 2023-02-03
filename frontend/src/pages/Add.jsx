@@ -129,9 +129,6 @@ function Add() {
             Ajoutez votre transaction
           </h2>
         </div>
-        <button type="button" onClick={() => console.warn(currentDate)}>
-          rthrstgfr
-        </button>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">

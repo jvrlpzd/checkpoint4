@@ -54,7 +54,9 @@ function SignUp() {
     <div>
       <div className="min-h-full flex flex-col justify-center py-10 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <img className="mx-auto h-20 w-auto" src={logo} alt="Piggy" />
+          <a href="/">
+            <img className="mx-auto h-20 w-auto" src={logo} alt="Piggy" />
+          </a>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Créez votre compte
           </h2>

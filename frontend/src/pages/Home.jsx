@@ -14,7 +14,7 @@ function Home() {
                 <img className="mx-auto h-32 w-auto" src={logo} alt="Piggy" />
               </div>
               <div className="mt-20">
-                <div className="mt-6 sm:max-w-xl">
+                <div className="mt-6 sm:max-w-xl mx-2">
                   <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl">
                     Une application pour mieux suivre vos dépenses
                   </h1>
